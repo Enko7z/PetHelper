@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.PetHelper" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="fontFamily">@font/jost_regular</item>
+    </style>
+
+    <style name="Theme.PetHelper" parent="Base.Theme.PetHelper" />
+    <style name="MyTextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/darkbrown</item>
+        <item name="hintTextColor">@color/darkbrown</item>
+        <item name="boxBackgroundColor">@color/lightbrown</item>
+    </style>
+
+
+</resources>

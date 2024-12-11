@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">PetHelper</string>
+    <string name="calendar">Календарь</string>
+    <string name="petData">Данные питомца</string>
+    <string name="petName">Кличка</string>
+    <string name="petDate">Дата рождения</string>
+    <string name="petSave">Сохранить данные</string>
+    <string name="eventName">Название события</string>
+    <string name="eventDate">Дата события</string>
+    <string name="cancel">Отмена</string>
+    <string name="OK">ОК</string>
+    <string name="delete">Удалить</string>
+    <string name="create">Создать</string>
+<!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <string-array name="typePet">
+        <item>Кошка</item>
+        <item>Собака</item>
+    </string-array>
+    <string-array name="breedCat">
+        <item>Абиссинская</item>
+        <item>Британская</item>
+        <item>Мейн-кун</item>
+        <item>Манчкин</item>
+        <item>Невская</item>
+        <item>Сиамская</item>
+        <item>Сибирская</item>
+        <item>Шотландская</item>
+    </string-array>
+    <string-array name="breedDog">
+        <item>Акита-ину</item>
+        <item>Алабай</item>
+        <item>Бигль</item>
+        <item>Доберман</item>
+        <item>Лабрадор</item>
+        <item>Сиба-ину</item>
+        <item>Терьер</item>
+        <item>Шпиц</item>
+    </string-array>
+<!-- Календарь -->
+    <string name="material_calendar_monday">Пн</string>
+    <string name="material_calendar_tuesday">Вт</string>
+    <string name="material_calendar_wednesday">Ср</string>
+    <string name="material_calendar_thursday">Чт</string>
+    <string name="material_calendar_friday">Пт</string>
+    <string name="material_calendar_saturday">Сб</string>
+    <string name="material_calendar_sunday">Вс</string>
+
+    <array name="material_calendar_months_array">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </array>
+
+    <string name="material_calendar_today_button">Сегодня</string>
+    <string name="material_calendar_positive_button">OK</string>
+    <string name="material_calendar_negative_button">Отмена</string>
+
+    <string-array name="eventType">
+        <item>Выгул</item>
+        <item>Груминг</item>
+        <item>Поход к врачу</item>
+        <item>Приём таблеток</item>
+        <item>Остальное</item>
+    </string-array>
+</resources>
