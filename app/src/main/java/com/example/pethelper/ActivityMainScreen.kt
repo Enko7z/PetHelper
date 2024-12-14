@@ -20,17 +20,12 @@ class ActivityMainScreen : AppCompatActivity() {
                 R.id.calendar -> replaseFragment(Calendar_frag())
                 R.id.menu -> replaseFragment(MainPage_frag())
                 R.id.profile -> replaseFragment(Profile_frag())
-
                 else -> {
-
-
                 }
-
             }
             true
         }
         binding.bottomNavigationView2.setSelectedItemId(R.id.menu);
-
     }
 
     private fun replaseFragment(fragment: Fragment){

@@ -8,13 +8,21 @@ import com.example.pethelper.entities.PersonDbEntity
 import com.example.pethelper.entities.PetDbEntity
 import com.example.pethelper.repository.PersonRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class ViewModelPerson(val repository: PersonRepository) : ViewModel() {
     val persons = MutableLiveData<List<PersonDbEntity>>()
     val pets = MutableLiveData<List<PetDbEntity>>()
     val events = MutableLiveData<List<EventDbEntity>>()
+
+    fun CallAndWait(function: () -> Unit) = runBlocking{
+        GlobalScope.launch {
+            function()
+        }.join()
+    }
 
     // PERSON
     fun getPersons(login: String, password: String) {
@@ -46,6 +54,14 @@ class ViewModelPerson(val repository: PersonRepository) : ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 repository.insertPet(pet)
+            }
+        }
+    }
+
+    fun updatePet(pet: PetDbEntity){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.updatePet(pet)
             }
         }
     }
@@ -88,11 +104,4 @@ class ViewModelPerson(val repository: PersonRepository) : ViewModel() {
             }
         }
     }
-//    fun getEventsForDay(petId: Long, cal: Calendar){
-//        viewModelScope.launch {
-//            events.value = withContext(Dispatchers.IO) {
-//                repository.getEventsForDay(petId, cal)
-//            }
-//        }
-//    }
 }

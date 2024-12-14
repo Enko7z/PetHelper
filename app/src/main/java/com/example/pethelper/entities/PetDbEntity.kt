@@ -7,7 +7,7 @@ import java.util.Date
 @Entity(tableName = "pet_table")
 data class PetDbEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val name: String,
+    var name: String,
     val type: String,
     val breed: String,
     val birthDate: Date,

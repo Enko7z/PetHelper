@@ -3,15 +3,22 @@
     <string name="calendar">Календарь</string>
     <string name="petData">Данные питомца</string>
     <string name="petName">Кличка</string>
+    <string name="petType">Тип животого</string>
+    <string name="petBreed">Порода</string>
     <string name="petDate">Дата рождения</string>
     <string name="petSave">Сохранить данные</string>
+    <string name="petChange">Изменить данные</string>
     <string name="eventName">Название события</string>
     <string name="eventDate">Дата события</string>
     <string name="cancel">Отмена</string>
     <string name="OK">ОК</string>
     <string name="delete">Удалить</string>
     <string name="create">Создать</string>
-<!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="registration">Регистрация</string>
+    <string name="enter">Вход</string>
+    <!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
     <string-array name="typePet">
         <item>Кошка</item>
         <item>Собака</item>
@@ -36,7 +43,7 @@
         <item>Терьер</item>
         <item>Шпиц</item>
     </string-array>
-<!-- Календарь -->
+    <!-- Календарь -->
     <string name="material_calendar_monday">Пн</string>
     <string name="material_calendar_tuesday">Вт</string>
     <string name="material_calendar_wednesday">Ср</string>

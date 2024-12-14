@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/PetName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/TextHead"
+        style="@style/MyTextInputStyle"
+        android:background="@drawable/custom_edittext"
+        android:drawablePadding="8dp"
+        android:hint="@string/petName"
+        android:padding="8dp"
+        android:textColor="@color/black"/>
+
+    <Spinner
+        android:id="@+id/PetType"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/PetName"
+        android:background="@drawable/custom_edittext"
+        />
+    <Spinner
+        android:id="@+id/PetBreed"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/PetType"
+        android:background="@drawable/custom_edittext"
+        />
+
+    <EditText
+        android:id="@+id/PetDate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/PetBreed"
+        android:background="@drawable/custom_edittext"
+        android:drawablePadding="8dp"
+        android:hint="@string/petDate"
+        android:padding="8dp"
+        android:textColor="@color/black"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+</LinearLayout>

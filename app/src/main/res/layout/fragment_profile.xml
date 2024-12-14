@@ -19,7 +19,7 @@
             android:textSize="26dp"
             android:layout_gravity="center_horizontal"/>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/PetName"
             android:layout_width="370dp"
             android:layout_height="50dp"
@@ -33,21 +33,29 @@
             android:padding="8dp"
             android:textColor="@color/black"/>
          
-        <Spinner
+        <EditText
             android:id="@+id/PetType"
             android:layout_width="370dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
+            style="@style/MyTextInputStyle"
+            android:drawablePadding="8dp"
+            android:hint="@string/petType"
+            android:padding="8dp"
             android:layout_below="@+id/PetName"
             android:background="@drawable/custom_edittext"
             />
-        <Spinner
+        <EditText
             android:id="@+id/PetBreed"
             android:layout_width="370dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
+            style="@style/MyTextInputStyle"
+            android:hint="@string/petBreed"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
             android:layout_below="@+id/PetType"
             android:background="@drawable/custom_edittext"
             />
@@ -60,6 +68,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/PetBreed"
             android:background="@drawable/custom_edittext"
+            style="@style/MyTextInputStyle"
             android:drawablePadding="8dp"
             android:hint="@string/petDate"
             android:padding="8dp"
@@ -70,12 +79,12 @@
             android:focusableInTouchMode="false"/>
 
         <Button
-            android:id="@+id/SavePetButton"
+            android:id="@+id/ChangePetButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/brown"
             android:textColor="@color/black"
-            android:text="@string/petSave"
+            android:text="@string/petChange"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/PetDate" />
@@ -83,7 +92,7 @@
             android:id="@+id/CatImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/SavePetButton"
+            android:layout_below="@id/ChangePetButton"
             android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/im_girlwithparrot" />

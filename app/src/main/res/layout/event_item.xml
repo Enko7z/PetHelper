@@ -26,11 +26,4 @@
         android:textSize="14sp"
         android:textColor="@android:color/darker_gray"
         android:paddingEnd="8dp"/>
-
-<!--    &lt;!&ndash; Чекбокс &ndash;&gt;-->
-<!--    <CheckBox-->
-<!--        android:id="@+id/cbEventCompleted"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text=""/>-->
 </LinearLayout>

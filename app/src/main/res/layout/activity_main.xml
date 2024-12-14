@@ -38,14 +38,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="center_horizontal"
-                android:padding="24dp"
+                android:padding="16dp"
                 android:background="@drawable/custom_edittext">
 
                 <TextView
                     android:id="@+id/loginText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Логин"
+                    android:text="@string/login"
                     android:textSize="36sp"
                     android:textAlignment="center"
                     android:textStyle="bold"
@@ -59,7 +59,7 @@
                     android:background="@drawable/custom_edittext"
                     android:drawableStart="@drawable/ic_person_2"
                     android:drawablePadding="8dp"
-                    android:hint="Почта/логин"
+                    android:hint="@string/login"
                     android:padding="8dp"
                     android:textColor="@color/black" />
 
@@ -71,7 +71,7 @@
                     android:background="@drawable/custom_edittext"
                     android:inputType="textPassword"
                     android:padding="8dp"
-                    android:hint="Пароль"
+                    android:hint="@string/password"
                     android:drawableStart="@drawable/ic_lock"
                     android:textColor="@color/black"
                     android:drawablePadding="8dp"/>
@@ -80,9 +80,18 @@
                     android:id="@+id/loginButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:text="Login"
+                    android:text="@string/enter"
                     android:textSize="18sp"
                     android:layout_marginTop="30dp"
+                    android:backgroundTint="@color/brown"
+                    app:cornerRadius="20dp"/>
+
+                <Button
+                    android:id="@+id/regButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="@string/registration"
+                    android:textSize="18sp"
                     android:backgroundTint="@color/brown"
                     app:cornerRadius="20dp"/>
 

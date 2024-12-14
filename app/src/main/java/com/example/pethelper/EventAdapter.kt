@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pethelper.entities.EventDbEntity
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 interface ItemClickListener {
     fun onItemClick(position: Int)
@@ -20,7 +18,6 @@ class EventAdapter(val events: MutableList<EventDbEntity>, private val itemClick
     inner class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
         val eventName: TextView = itemView.findViewById(R.id.tvEventName)
         val eventDate: TextView = itemView.findViewById(R.id.tvEventDate)
-//        val eventCompleted: CheckBox = itemView.findViewById(R.id.cbEventCompleted)
 
         init {
             itemView.setOnClickListener(this)
@@ -38,16 +35,11 @@ class EventAdapter(val events: MutableList<EventDbEntity>, private val itemClick
 
         fun bind(event: EventDbEntity) {
             eventName.text = event.name
-
-            // Форматируем дату для отображения
-            val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            eventDate.text = dateFormat.format(event.date)
-            // Устанавливаем состояние чекбокса
-//            eventCompleted.isChecked = event.Completed
+            eventDate.text = DateToString(event.date)
         }
     }
 
-    // Создание нового ViewHolder, который использует макет event_item.xml
+    // Создание нового ViewHolder, который использует макет event_item
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.event_item, parent, false)
         return EventViewHolder(view)
@@ -61,7 +53,4 @@ class EventAdapter(val events: MutableList<EventDbEntity>, private val itemClick
 
     // Возвращаем общее количество элементов в списке
     override fun getItemCount(): Int = events.size
-
-
-
 }

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.PetHelper"
         tools:targetApi="31">
         <activity
+            android:name=".ListPetScreen"
+            android:exported="false" />
+        <activity
             android:name=".ActivityMainScreen"
             android:exported="false" />
         <activity

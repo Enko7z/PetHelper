@@ -2,6 +2,8 @@ package com.example.pethelper
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,29 +22,20 @@ import com.applandeo.materialcalendarview.CalendarDay
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.CalendarWeekDay
 import com.applandeo.materialcalendarview.listeners.OnCalendarDayClickListener
+import com.example.pethelper.entities.EventDbEntity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Calendar
 import java.util.Date
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Calendar_frag.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Calendar_frag : Fragment(), ItemClickListener {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     private lateinit var calendarView: CalendarView
-    var calendars: ArrayList<CalendarDay> = ArrayList() // массив настроек дней календарных событий
     lateinit var recyclerView: RecyclerView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +43,7 @@ class Calendar_frag : Fragment(), ItemClickListener {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        ConnectEventObserver()
     }
 
     override fun onCreateView(
@@ -66,17 +60,9 @@ class Calendar_frag : Fragment(), ItemClickListener {
         calendarView = view.findViewById(R.id.calendar)
         calendarView.setFirstDayOfWeek(CalendarWeekDay.MONDAY) // Установка понедельника, как первый день недели
 
-        var pet = person.Pets[0]
-        for (event in pet.Events) {
-            AddEventInCalendar(calendars, event)
-        }
-
-        calendarView.setCalendarDays(calendars)
-
         calendarView.setOnCalendarDayClickListener(object : OnCalendarDayClickListener {
             override fun onClick(calendarDay: CalendarDay) {
-                //UpdateEventsForDayInRecycleView(calendarDay.calendar)
-                //UpdateEventsForRecycleView(recyclerView, calendarDay.calendar, true, this@Calendar_frag)
+                ReloadRecycleView(calendarDay.calendar)
             }
         })
 
@@ -85,35 +71,70 @@ class Calendar_frag : Fragment(), ItemClickListener {
         floatingActButView.bringToFront()
         floatingActButView.setOnClickListener{
             val cal = calendarView.selectedDates[0]
-            showEventDialog(cal)
+            ShowAddEventDialog(cal)
         }
-
-        //UpdateEventsForRecycleView(recyclerView, calendarView.selectedDates[0], true, this@Calendar_frag)
         return view
     }
+    fun ConnectEventObserver(){
+        viewModel.events.observe(this){ eventlist->
+            var calendars: ArrayList<CalendarDay> = ArrayList() // массив настроек дней календарных событий
+            if (!eventlist.isNullOrEmpty()){
+                for (event in eventlist)
+                {
+                    var calendar = Calendar.getInstance()
+                    calendar.time = event.date
+                    val calendarDay = CalendarDay(calendar)
+                    calendarDay.labelColor = R.color.orange
+                    calendarDay.imageResource = R.drawable.ic_event
+                    calendars.add(calendarDay)
+                }
+            }
+            calendarView.setCalendarDays(calendars)
+
+            ReloadRecycleView(calendarView.selectedDates[0])
+        }
+    }
+
+    fun ReloadRecycleView(calendar: Calendar){
+        val selEventList: MutableList<EventDbEntity>  // список событий текущего дня
+        val eventlist: List<EventDbEntity>? = viewModel.events.value
+        if (!eventlist.isNullOrEmpty()){
+            selEventList = eventlist.filter { e ->
+                e.date.time == calendar.timeInMillis
+            }.sortedBy { it.date }.toMutableList()
+        }else{
+            selEventList = mutableListOf() // список событий текущего дня пустой
+        }
+        recyclerView.adapter = EventAdapter(selEventList, this)
+    }
+
     override fun onItemClick(position: Int) {
-//        // Handle item click
-//        Toast.makeText(requireContext(), "Item clicked at position $position", Toast.LENGTH_SHORT).show()
+        // код
     }
 
     override fun onLongItemClick(position: Int) {
-        // Handle long item click
-        Toast.makeText(requireContext(), "Item long clicked at position $position", Toast.LENGTH_SHORT).show()
+        ShowRemoveEventDialog(requireContext(),(recyclerView.adapter as EventAdapter).events[position])
     }
 
-    fun AddEventInCalendar(calendars: ArrayList<CalendarDay>, event: Event){
-
-        var calendar = Calendar.getInstance()
-
-        var date = event.Date
-        calendar.time = date
-        val calendarDay = CalendarDay(calendar) //
-        calendarDay.labelColor = R.color.orange
-        calendarDay.imageResource = R.drawable.ic_event
-        calendars.add(calendarDay)
+    fun ShowRemoveEventDialog(context: Context, event: EventDbEntity) {
+        val alertDialogBuilder = androidx.appcompat.app.AlertDialog.Builder(context)
+        alertDialogBuilder.setTitle("Удалить событие")
+        alertDialogBuilder.setMessage("Вы действительно хотите удалить событие \"${event.name}?\"")
+        alertDialogBuilder.setPositiveButton("Удалить") { _: DialogInterface, _: Int ->
+            // удаляем
+            viewModel.CallAndWait { viewModel.repository.deleteEvent(event) }
+            // обновляем события
+            viewModel.getEvents(selectedPet.id)
+            Toast.makeText(requireContext(), "Событие \"${event.name}?\" удалено", Toast.LENGTH_SHORT).show()
+        }
+        alertDialogBuilder.setNegativeButton("Отмена") { dialogInterface: DialogInterface, i: Int ->
+            dialogInterface.dismiss()
+        }
+        var alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
-    private fun showEventDialog(cal: Calendar) {
+    private fun ShowAddEventDialog(cal: Calendar) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_event, null)
         val eventNameEditText = dialogView.findViewById<EditText>(R.id.eventNameEditText)
         val selectDateButton = dialogView.findViewById<Button>(R.id.selectDateButton)
@@ -132,7 +153,7 @@ class Calendar_frag : Fragment(), ItemClickListener {
         }
 
         var (d, m, y) = getDateValues(cal)
-        selectDateButton.text = "$d-${m + 1}-$y"
+        selectDateButton.text = DateToString(cal.time)
 
         // Настройка кнопки выбора даты
         selectDateButton.setOnClickListener {
@@ -179,31 +200,19 @@ class Calendar_frag : Fragment(), ItemClickListener {
             // Действие при подтверждении
             okButton.setOnClickListener {
                 val eventName = eventNameEditText.text.toString()
-                val eventType = eventTypeSpinner.selectedItem.toString()
                 val eventDate = Date(y - 1900, m, d)
+                val eventType = eventTypeSpinner.selectedItem.toString()
                 // добавление ивента и отображение, обновить список ивентов
-                val event = Event(eventName, eventDate, eventType)
-                person.Pets[0].Events.add(event)
-                AddEventInCalendar(calendars, event)
-                //UpdateEventsForRecycleView(recyclerView, cal, true, this@Calendar_frag)
-                calendarView.setCalendarDays(calendars)
+                val event = EventDbEntity(0, eventName, eventDate, eventType, selectedPet.id)
+                viewModel.CallAndWait({ viewModel.repository.insertEvent(event)})
+                viewModel.getEvents(selectedPet.id)
                 dialog.dismiss()
             }
         }
-
         dialog.show()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Calendar.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic fun newInstance(param1: String, param2: String) =
                 Calendar_frag().apply {
                     arguments = Bundle().apply {
